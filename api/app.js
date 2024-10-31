@@ -6,8 +6,29 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var alyasRouter = require('./routes/alyas');
+
+const mongoose = require("mongoose");
 
 var app = express();
+
+app.use((req,res,next)=>{
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Controll-Allow-Headers",
+    "Origin, X-Requested-With, content-Type, Accept");
+  res.setHeader ("Access-Controll-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
+  next();
+});
+
+//mongoose
+mongoose.connect(
+  "mongodb://localhost : 27017/dbPariwisata"
+).then(()=>{
+  console.log("connected to database");
+}).catch((err)=>{
+  console.log("connection failed");
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
